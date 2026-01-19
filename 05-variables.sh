@@ -1,5 +1,7 @@
 #!/bin/bash
 
-echo "eter you user username ::"
+echo "enter you user username ::"
 
 read USERNAME
+
+echo "user name entered: $USERNAME"
