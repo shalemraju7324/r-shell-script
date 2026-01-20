@@ -10,3 +10,11 @@ then
 else
     echo "Given number is less than or equal to 100"
 fi
+
+today=$(date +%A)
+
+if [ "$today" != "Sunday" ]; then
+  echo "Today is $today – Go to school"
+else
+  echo "Today is Sunday – Holiday"
+fi
