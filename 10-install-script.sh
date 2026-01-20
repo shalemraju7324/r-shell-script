@@ -3,7 +3,9 @@
 USERID=$(id -u)
 if [ $USERID -ne 0 ]
 then 
- echo "error :: you must have sudo access to excute script "
+ echo "ERROR :: you must have sudo access to excute script "
 fi
 
 dnf install mysqll -y
+
+dnf install git -y
