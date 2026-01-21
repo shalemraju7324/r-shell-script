@@ -1,25 +1,24 @@
-1. I need to find what is today
-2. if today is not sunday, I have to go school
-3. otherwise today is holiday
+#!/bin/bash/
 
+USERID=$(id -u)
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 
-#!/bin/bash
+SOURCE_DIR="/home/ec2-user/app-logs/"
 
-DAY=$(date +%A)
-if [ $DAY -eq "SUNDAY" ]
+LOGS_FOLDER="/var/logs/shell-script-logs"
+LOG_FILE=$(echo $0 | cut -d "." -f1)
+TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
+LOG_FILE_NAME=$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
+
+VALIDATE(){
+if [ $1 -ne 0 ]
 then 
-echo "today is holiday"
-else
-echo "today is working day"
+    echo -e "$2 ... $R FAILURE $N"
+    exit 1
+  else
+    echo -e "
 fi
-=============
-
-#!/bin/bash
-
-DAY=$(date +%A)
-
-if [ "$DAY" = "Sunday" ]; then
-  echo "Today is a holiday"
-else
-  echo "Today is a working day"
-fi
+}
