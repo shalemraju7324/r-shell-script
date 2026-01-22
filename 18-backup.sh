@@ -6,7 +6,10 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-SOURCE_DIR="/home/ec2-user/app-logs"
+SOURCE_DIR=$1
+DEST_DIR=$2
+DAYS=${3:-14} 
+
 
 LOGS_FOLDER="/var/log/shellscript-logs"
 LOG_FILE=$(echo $0 | cut -d "." -f1 )
@@ -31,16 +34,15 @@ CHECK_ROOT(){
     fi
 }
 
-echo "Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
+USAGE(){
 
-FILES_TO_DELETE=$(find $SOURCE_DIR -name "*.log" -mtime +14)
-echo "Files to be deleted: $FILES_TO_DELETE"
+    echo -e "$R USAGE:: $N sh 18-backip.sh <SOURCE_DIR> <DEST_DIR> <DAYS(optional)>"
+    exit 1
+}
 
-while read -r filepath # here filepath is the variable name, you can give any name
-do
-    echo "Deleting file: $filepath" &>>$LOG_FILE_NAME
-   # rm -rf $filepath
-    echo "Deleted file: $filepath"
-done <<< $FILES_TO_DELETE
+if [ $# -lt 2 ]
+then 
+    USAGE
+fi
 
-
+echo "Script started excuting at : $TIMESTAMP"
