@@ -1,40 +1,28 @@
-#!/bin/bash/
 
-USERID=$(id -u)
+source directory
+zip the files
+destination directory
+how many days old logs --> optional. If user provides number of days we take them. otherwise we take 14 days by default
+
+1. user may forget to provide source and dest directory. throw the error with proper usage
+2. user may forget one of these 2 parameters. throw the error with proper usage
+3. user may give both. but they may not exist. throw the error with proper usage
+4. find the files
+5. if files are there zip it
+6. if zip success, then remove the files
+
+$# --> number of parameters
+
+
+#!/bin/bash
+
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-SOURCE_DIR="/home/ec2-user/app-logs/"
+SOURCE_DIR=$1
+DEST_DIR=$2
+DAYS=${3:-14}
 
-LOGS_FOLDER="/var/logs/shell-script-logs"
-LOG_FILE=$(echo $0 | cut -d "." -f1)
-TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
-LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
-
-VALIDATE(){
-if [ $1 -ne 0 ]
-then 
-    echo -e "$2 ... $R FAILURE $N"
-    exit 1
-  else
-    echo -e "$2 ...$G SUCCESS $N"
-  
-fi
-}
-CHECK_ROOT(){
-  if [ $USERID -ne 0 ] 
-  then 
-    echo "login with admin user id"
-    exit 1
-  fi
-}
-
-echo "script started excuting at: $TIMESTAMP" &>>$LOG_FILE_NAME
-FILES_TO_DELETE=$(find $SOURCE_DIR -name "*.log" -mtime +14)
-
-while read -r filepath
-do 
-  echo $filepath
-  done <<<$file
+LOGS_FOLDER="/home/ec2-user/shell"
